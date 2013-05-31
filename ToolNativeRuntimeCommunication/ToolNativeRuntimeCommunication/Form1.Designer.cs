@@ -88,7 +88,7 @@
 			this.objectName.Size = new System.Drawing.Size(333, 22);
 			this.objectName.TabIndex = 1;
 			this.objectName.TextChanged += new System.EventHandler(this.objectName_TextChanged);
-			//
+			// 
 			// label4
 			// 
 			this.label4.AutoSize = true;
@@ -175,7 +175,7 @@
 			this.circleView.Controls.Add(this.label7);
 			this.circleView.Controls.Add(this.label9);
 			this.circleView.Controls.Add(this.label10);
-			this.circleView.Location = new System.Drawing.Point(545, 179);
+			this.circleView.Location = new System.Drawing.Point(545, 96);
 			this.circleView.Name = "circleView";
 			this.circleView.Size = new System.Drawing.Size(333, 86);
 			this.circleView.TabIndex = 14;
@@ -256,7 +256,7 @@
 			this.boxView.Controls.Add(this.label6);
 			this.boxView.Controls.Add(this.label1);
 			this.boxView.Controls.Add(this.label3);
-			this.boxView.Location = new System.Drawing.Point(545, 85);
+			this.boxView.Location = new System.Drawing.Point(545, 96);
 			this.boxView.Name = "boxView";
 			this.boxView.Size = new System.Drawing.Size(333, 88);
 			this.boxView.TabIndex = 15;

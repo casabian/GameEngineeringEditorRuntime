@@ -113,9 +113,7 @@ namespace ToolNativeRuntimeCommunication
 			saveXmlDialog.InitialDirectory = Application.ExecutablePath;
 
 			if (saveXmlDialog.ShowDialog() == DialogResult.OK)
-			{
 				XMLFileWriter.WriteData(shapesList, saveXmlDialog.FileName);
-			}
 		}
 
 		private void objectName_TextChanged(object sender, EventArgs e)

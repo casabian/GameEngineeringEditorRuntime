@@ -9,18 +9,4 @@ namespace ToolNativeRuntimeCommunication
 	{
 		Shape Create(string Type);
 	}
-
-	public class Factory
-	{
-		public Shape Create(string Type)
-		{
-			if (Type == "Circle")
-			{
-
-			}
-			else if (Type == "Box")
-			{
-			}
-		}
-	}
 }
