@@ -58,6 +58,8 @@
     <Compile Include="Shape\Factory.cs" />
     <Compile Include="Shape\Shape.cs" />
     <Compile Include="XMLTextWriter.cs" />
+    <Compile Include="Shape\ShapeRectangle.cs" />
+    <Compile Include="XMLFileWriter.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>

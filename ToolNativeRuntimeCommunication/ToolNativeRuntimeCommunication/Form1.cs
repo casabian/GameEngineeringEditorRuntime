@@ -16,15 +16,15 @@ namespace ToolNativeRuntimeCommunication
 			InitializeComponent();
 
 			// box handler
-			minX.Validated += new EventHandler(UpdateShapeView);
-			minY.Validated += new EventHandler(UpdateShapeView);
-			maxX.Validated += new EventHandler(UpdateShapeView);
-			maxY.Validated += new EventHandler(UpdateShapeView);
+			minX.Validated += new EventHandler(UpdateShapeAttributes);
+			minY.Validated += new EventHandler(UpdateShapeAttributes);
+			maxX.Validated += new EventHandler(UpdateShapeAttributes);
+			maxY.Validated += new EventHandler(UpdateShapeAttributes);
 
 			// circle handler
-			centerX.Validated += new EventHandler(UpdateShapeView);
-			centerY.Validated += new EventHandler(UpdateShapeView);
-			radius.Validated += new EventHandler(UpdateShapeView);
+			centerX.Validated += new EventHandler(UpdateShapeAttributes);
+			centerY.Validated += new EventHandler(UpdateShapeAttributes);
+			radius.Validated += new EventHandler(UpdateShapeAttributes);
 
 			server.Start();
 
@@ -41,19 +41,9 @@ namespace ToolNativeRuntimeCommunication
 			{
 				Shape shape = shapesList[shapeView.SelectedIndex];
 				objectName.Text = shape.Name;
-				if (shape is Box)
-				{
-					minX.Value = (shape as Box).MinX;
-					minY.Value = (shape as Box).MinY;
-					maxX.Value = (shape as Box).MaxX;
-					maxY.Value = (shape as Box).MaxY;
-				}
-				else if (shape is Circle)
-				{
-					centerX.Value = (shape as Circle).CenterX;
-					centerY.Value = (shape as Circle).CenterY;
-					radius.Value = (decimal)(shape as Circle).Radius;
-				}
+
+				shape.UpdateView();
+
 				SetVisibilityOfAllGroupBoxesExcept(false, shape.GetView().Name);
 			}
 		}
@@ -63,18 +53,19 @@ namespace ToolNativeRuntimeCommunication
 			if (e.KeyCode == Keys.Delete)
 			{
 				shapesList.RemoveAt(shapeView.SelectedIndex);
-				UpdateShapeView(this, EventArgs.Empty);
+				UpdateShapeAttributes(this, EventArgs.Empty);
 			}
 		}
 
 		private void addCircle_Click(object sender, EventArgs e)
 		{
 			Shape shape = ShapeFactory.Create(Circle.Name, objectName.Text);
+
 			shape.RegisterView(ref circleView);
 			shapesList.Add(shape);
-			UpdateShapeView(this, EventArgs.Empty);
+			UpdateShapeAttributes(this, EventArgs.Empty);
 			SetVisibilityOfAllGroupBoxesExcept(true, boxView.Name);
-			shapeView.SelectedIndex = shapeView.Items.Count - 1;
+			shapeView.SelectedIndex = shapeView.Items.Count - 1;		
 		}
 
 		private void addBox_Click(object sender, EventArgs e)
@@ -82,7 +73,7 @@ namespace ToolNativeRuntimeCommunication
 			Shape shape = ShapeFactory.Create(Box.Name, objectName.Text);
 			shape.RegisterView(ref boxView);
 			shapesList.Add(shape);
-			UpdateShapeView(this, EventArgs.Empty);
+			UpdateShapeAttributes(this, EventArgs.Empty);
 			SetVisibilityOfAllGroupBoxesExcept(true, circleView.Name);
 			shapeView.SelectedIndex = shapeView.Items.Count - 1;
 		}
@@ -110,14 +101,14 @@ namespace ToolNativeRuntimeCommunication
 			if (shapeView.SelectedIndex > -1)
 			{
 				shapesList[shapeView.SelectedIndex].Name = objectName.Text;
-				UpdateShapeView(this, EventArgs.Empty);
+				UpdateShapeAttributes(this, EventArgs.Empty);
 			}
 		}
 
-		private void UpdateShapeView(object sender, EventArgs e)
+		private void UpdateShapeAttributes(object sender, EventArgs e)
 		{
 			if (shapeView.Items.Count > 0)
-				shapesList[shapeView.SelectedIndex].UpdateView();
+				shapesList[shapeView.SelectedIndex].UpdateAttributes();
 			shapeView.DataSource = null;
 			shapeView.DataSource = shapesList;
 
