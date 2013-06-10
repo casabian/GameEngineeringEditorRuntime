@@ -59,7 +59,7 @@ namespace ToolNativeRuntimeCommunication
 
 		private void addCircle_Click(object sender, EventArgs e)
 		{
-            Shape shape = ShapeFactory.Create(ShapeCircle.Name, objectName.Text);
+            Shape shape = Shape.Create(ShapeCircle.Name, objectName.Text);
 			shape.RegisterView(ref circleView);
 			shapesList.Add(shape);
 			UpdateShapeAttributes(this, EventArgs.Empty);
@@ -69,7 +69,7 @@ namespace ToolNativeRuntimeCommunication
 
 		private void addBox_Click(object sender, EventArgs e)
 		{
-            Shape shape = ShapeFactory.Create(ShapeRectangle.Name, objectName.Text);
+            Shape shape = Shape.Create(ShapeRectangle.Name, objectName.Text);
 			shape.RegisterView(ref boxView);
 			shapesList.Add(shape);
 			UpdateShapeAttributes(this, EventArgs.Empty);

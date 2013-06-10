@@ -55,7 +55,6 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Server.cs" />
-    <Compile Include="Shape\Factory.cs" />
     <Compile Include="Shape\Shape.cs" />
     <Compile Include="Shape\ShapeCircle.cs" />
     <Compile Include="XMLTextWriter.cs" />

@@ -47,7 +47,13 @@ namespace ToolNativeRuntimeCommunication
 			this.view = view;
 		}
 
-		public abstract void Serialize(ref XmlWriter xmlWriter);
+        public static Shape Create(string typeString, string name)
+        {
+            Type type = Type.GetType("ToolNativeRuntimeCommunication." + typeString);
+            return (Shape)Activator.CreateInstance(type, name);
+        }
+        
+        public abstract void Serialize(ref XmlWriter xmlWriter);
 
 		public abstract void UpdateView();
 
