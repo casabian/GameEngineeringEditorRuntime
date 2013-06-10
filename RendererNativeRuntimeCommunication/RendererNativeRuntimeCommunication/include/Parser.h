@@ -11,48 +11,27 @@
 class Parser 
 {
 public:
-	static void Parse(std::string fileName, std::vector<Shape*>& shapeList)
+	static void Parse(std::string xmlString, std::vector<Shape*>& shapeList)
 	{
-		cinder::fs::path filePath(fileName);
-		if (cinder::fs::exists(filePath))
-		{
-			cinder::XmlTree xmlDocument(cinder::loadFile(filePath.native()));
+		for (auto it = shapeList.begin(); it != shapeList.end(); ++it)
+			delete (*it);
+		shapeList.clear();
 
-			if (xmlDocument.hasChild("Shapes"))
+		cinder::XmlTree xmlDocument(xmlString);
+
+		if (xmlDocument.hasChild("Shapes"))
+		{
+			cinder::XmlTree shapes = xmlDocument.getChild("Shapes");
+			Shape* shape;
+			for (cinder::XmlTree::Container::iterator it = shapes.getChildren().begin();
+				it != shapes.getChildren().end(); 
+				++it)
 			{
-				cinder::XmlTree shapes = xmlDocument.getChild("Shapes");
-				Shape* shape;
-				for (cinder::XmlTree::Container::iterator it = shapes.getChildren().begin();
-					it != shapes.getChildren().end(); 
-					++it)
-				{
-					if ((*it)->getTag() == "Circle")
-					{
-						shape = new Circle(
-							(*it)->getAttribute("Name"), 
-							ci::Vec2i(
-								(*it)->getAttributeValue<int>("CenterX"),
-								(*it)->getAttributeValue<int>("CenterY")
-							),
-							(*it)->getAttributeValue<float>("Radius")
-						);
-					}
-					else if ((*it)->getTag() == "Box")
-					{
-						shape = new Box(
-							(*it)->getAttribute("Name"),
-							ci::Vec2i(
-								(*it)->getAttributeValue<int>("MinX"),
-								(*it)->getAttributeValue<int>("MinY")
-							),
-							ci::Vec2i(
-								(*it)->getAttributeValue<int>("MaxX"),
-								(*it)->getAttributeValue<int>("MaxY")
-							)
-						);
-					}
-					shapeList.push_back(shape);
-				}
+
+				shape = Shape::Create((*it)->getTag());
+				shape->FromXml(*(*it));
+
+				shapeList.push_back(shape);
 			}
 		}
 	}

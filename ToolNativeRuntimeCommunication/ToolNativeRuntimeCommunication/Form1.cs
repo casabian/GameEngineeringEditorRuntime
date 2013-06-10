@@ -5,11 +5,11 @@ using System.Linq;
 
 namespace ToolNativeRuntimeCommunication
 {
-	public enum ShapeType { Circle = 0, Box };
-
 	public partial class Form1 : Form
 	{
 		private BindingList<Shape> shapesList = new BindingList<Shape>();
+
+		private Server server = new Server();
 
 		public Form1()
 		{
@@ -25,6 +25,8 @@ namespace ToolNativeRuntimeCommunication
 			centerX.Validated += new EventHandler(UpdateShapeView);
 			centerY.Validated += new EventHandler(UpdateShapeView);
 			radius.Validated += new EventHandler(UpdateShapeView);
+
+			server.Start();
 
 			SetVisibilityOfAllGroupBoxesExcept(false, null);
 		}
@@ -67,12 +69,7 @@ namespace ToolNativeRuntimeCommunication
 
 		private void addCircle_Click(object sender, EventArgs e)
 		{
-			Shape shape = new Circle(
-					objectName.Text,
-					(int)centerX.Value,
-					(int)centerY.Value,
-					(float)radius.Value
-				);
+			Shape shape = ShapeFactory.Create(Circle.Name, objectName.Text);
 			shape.RegisterView(ref circleView);
 			shapesList.Add(shape);
 			UpdateShapeView(this, EventArgs.Empty);
@@ -82,13 +79,7 @@ namespace ToolNativeRuntimeCommunication
 
 		private void addBox_Click(object sender, EventArgs e)
 		{
-			Shape shape = new Box(
-					objectName.Text,
-					(int)minX.Value,
-					(int)minY.Value,
-					(int)maxX.Value,
-					(int)maxY.Value
-				);
+			Shape shape = ShapeFactory.Create(Box.Name, objectName.Text);
 			shape.RegisterView(ref boxView);
 			shapesList.Add(shape);
 			UpdateShapeView(this, EventArgs.Empty);
@@ -99,9 +90,7 @@ namespace ToolNativeRuntimeCommunication
 		private void SetVisibilityOfAllGroupBoxesExcept(bool visibility, string except)
 		{
 			foreach (Control control in Controls.OfType<GroupBox>())
-			{
 				control.Visible = (except != null && control.Name == except) ? !visibility : visibility;
-			}
 		}
 
 		private void saveAsXMLToolStripMenuItem_Click(object sender, EventArgs e)
@@ -113,7 +102,7 @@ namespace ToolNativeRuntimeCommunication
 			saveXmlDialog.InitialDirectory = Application.ExecutablePath;
 
 			if (saveXmlDialog.ShowDialog() == DialogResult.OK)
-				XMLFileWriter.WriteData(shapesList, saveXmlDialog.FileName);
+				XMLTextWriter.AsFile(shapesList, saveXmlDialog.FileName);
 		}
 
 		private void objectName_TextChanged(object sender, EventArgs e)
@@ -131,6 +120,17 @@ namespace ToolNativeRuntimeCommunication
 				shapesList[shapeView.SelectedIndex].UpdateView();
 			shapeView.DataSource = null;
 			shapeView.DataSource = shapesList;
+
+			if (useTcp.Checked)
+			{
+				string xmlString = "";
+				XMLTextWriter.AsString(shapesList, ref xmlString);
+
+				lock (server.MessageToSend)
+				{
+					server.MessageToSend = xmlString;
+				}
+			}
 		}
 	}
 }

@@ -37,8 +37,8 @@
 			this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.undoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.redoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.addCircle = new System.Windows.Forms.Button();
-			this.addBox = new System.Windows.Forms.Button();
+			this.Circle = new System.Windows.Forms.Button();
+			this.Box = new System.Windows.Forms.Button();
 			this.saveXmlDialog = new System.Windows.Forms.SaveFileDialog();
 			this.circleView = new System.Windows.Forms.GroupBox();
 			this.radius = new System.Windows.Forms.NumericUpDown();
@@ -56,6 +56,7 @@
 			this.label6 = new System.Windows.Forms.Label();
 			this.label1 = new System.Windows.Forms.Label();
 			this.label3 = new System.Windows.Forms.Label();
+			this.useTcp = new System.Windows.Forms.CheckBox();
 			this.menuStrip1.SuspendLayout();
 			this.circleView.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.radius)).BeginInit();
@@ -147,25 +148,25 @@
 			this.redoToolStripMenuItem.Size = new System.Drawing.Size(165, 24);
 			this.redoToolStripMenuItem.Text = "Redo";
 			// 
-			// addCircle
+			// Circle
 			// 
-			this.addCircle.Location = new System.Drawing.Point(12, 31);
-			this.addCircle.Name = "addCircle";
-			this.addCircle.Size = new System.Drawing.Size(150, 23);
-			this.addCircle.TabIndex = 5;
-			this.addCircle.Text = "Add Circle";
-			this.addCircle.UseVisualStyleBackColor = true;
-			this.addCircle.Click += new System.EventHandler(this.addCircle_Click);
+			this.Circle.Location = new System.Drawing.Point(12, 31);
+			this.Circle.Name = "Circle";
+			this.Circle.Size = new System.Drawing.Size(150, 23);
+			this.Circle.TabIndex = 5;
+			this.Circle.Text = "Add Circle";
+			this.Circle.UseVisualStyleBackColor = true;
+			this.Circle.Click += new System.EventHandler(this.addCircle_Click);
 			// 
-			// addBox
+			// Box
 			// 
-			this.addBox.Location = new System.Drawing.Point(168, 31);
-			this.addBox.Name = "addBox";
-			this.addBox.Size = new System.Drawing.Size(150, 23);
-			this.addBox.TabIndex = 10;
-			this.addBox.Text = "Add Box";
-			this.addBox.UseVisualStyleBackColor = true;
-			this.addBox.Click += new System.EventHandler(this.addBox_Click);
+			this.Box.Location = new System.Drawing.Point(168, 31);
+			this.Box.Name = "Box";
+			this.Box.Size = new System.Drawing.Size(150, 23);
+			this.Box.TabIndex = 10;
+			this.Box.Text = "Add Box";
+			this.Box.UseVisualStyleBackColor = true;
+			this.Box.Click += new System.EventHandler(this.addBox_Click);
 			// 
 			// circleView
 			// 
@@ -347,15 +348,26 @@
 			this.label3.TabIndex = 11;
 			this.label3.Text = "Min Y";
 			// 
+			// useTcp
+			// 
+			this.useTcp.AutoSize = true;
+			this.useTcp.Location = new System.Drawing.Point(324, 33);
+			this.useTcp.Name = "useTcp";
+			this.useTcp.Size = new System.Drawing.Size(86, 21);
+			this.useTcp.TabIndex = 16;
+			this.useTcp.Text = "Use TCP";
+			this.useTcp.UseVisualStyleBackColor = true;
+			// 
 			// Form1
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(894, 508);
+			this.Controls.Add(this.useTcp);
 			this.Controls.Add(this.boxView);
 			this.Controls.Add(this.circleView);
-			this.Controls.Add(this.addBox);
-			this.Controls.Add(this.addCircle);
+			this.Controls.Add(this.Box);
+			this.Controls.Add(this.Circle);
 			this.Controls.Add(this.label4);
 			this.Controls.Add(this.objectName);
 			this.Controls.Add(this.shapeView);
@@ -393,8 +405,8 @@
 		private System.Windows.Forms.ToolStripMenuItem editToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem undoToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem redoToolStripMenuItem;
-		private System.Windows.Forms.Button addCircle;
-		private System.Windows.Forms.Button addBox;
+		private System.Windows.Forms.Button Circle;
+		private System.Windows.Forms.Button Box;
 		private System.Windows.Forms.SaveFileDialog saveXmlDialog;
 		private System.Windows.Forms.GroupBox circleView;
 		private System.Windows.Forms.NumericUpDown radius;
@@ -412,6 +424,7 @@
 		private System.Windows.Forms.Label label6;
 		private System.Windows.Forms.Label label1;
 		private System.Windows.Forms.Label label3;
+		private System.Windows.Forms.CheckBox useTcp;
 	}
 }
 

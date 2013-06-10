@@ -46,7 +46,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>..\include;"..\..\..\..\..\..\..\dev\sdk\cinder\include";"..\..\..\..\..\..\..\dev\sdk\cinder\boost";..\blocks\OSC\src</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\include;$(CINDER_DIR)\include;$(CINDER_DIR)\boost;..\blocks\OSC\src</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;NOMINMAX;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -61,7 +61,7 @@
     </ResourceCompile>
     <Link>
       <AdditionalDependencies>cinder_d.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>"..\..\..\..\..\..\..\dev\sdk\cinder\lib";"..\..\..\..\..\..\..\dev\sdk\cinder\lib\msw"</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(CINDER_DIR)\lib;$(CINDER_DIR)\lib\msw</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <RandomizedBaseAddress>false</RandomizedBaseAddress>
@@ -103,13 +103,19 @@
     <ResourceCompile Include="Resources.rc" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\src\CircleShape.cpp" />
+    <ClCompile Include="..\src\RectangleShape.cpp" />
     <ClCompile Include="..\src\RendererNativeRuntimeCommunicationApp.cpp" />
+    <ClCompile Include="..\src\Shape.cpp" />
+    <ClCompile Include="..\src\TcpClient.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\include\Factory.h" />
+    <ClInclude Include="..\include\CircleShape.h" />
     <ClInclude Include="..\include\Parser.h" />
+    <ClInclude Include="..\include\RectangleShape.h" />
     <ClInclude Include="..\include\Resources.h" />
     <ClInclude Include="..\include\Shape.h" />
+    <ClInclude Include="..\include\TcpClient.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets" />

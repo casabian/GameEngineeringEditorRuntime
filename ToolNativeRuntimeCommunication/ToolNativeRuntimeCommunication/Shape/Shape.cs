@@ -57,6 +57,12 @@ namespace ToolNativeRuntimeCommunication
 
 	public class Box : Shape
 	{
+		public Box(string name) :
+			base(name)
+		{
+
+		}
+		
 		public Box(
 			string name, 
 			int minX, int minY, 
@@ -110,6 +116,12 @@ namespace ToolNativeRuntimeCommunication
 
 	public class Circle : Shape
 	{
+		public Circle(string name) : 
+			base(name)
+		{
+
+		}
+
 		public Circle(string name, 
 			int centerX, 
 			int centerY, 
