@@ -9,6 +9,15 @@ namespace ToolNativeRuntimeCommunication
 {
 	class ShapeRectangle : Shape
 	{
+        public ShapeRectangle(string name)
+            : base(name)
+        {
+            MinX = 0;
+            MinY = 0;
+            MaxX = 0;
+            MaxY = 0;
+        }
+       
 		public ShapeRectangle(
 			string name,
 			int minX, int minY,

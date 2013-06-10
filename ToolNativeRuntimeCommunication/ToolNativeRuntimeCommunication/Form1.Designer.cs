@@ -37,8 +37,8 @@
 			this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.undoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.redoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.Circle = new System.Windows.Forms.Button();
-			this.Box = new System.Windows.Forms.Button();
+			this.ShapeCircle = new System.Windows.Forms.Button();
+			this.ShapeRectangle = new System.Windows.Forms.Button();
 			this.saveXmlDialog = new System.Windows.Forms.SaveFileDialog();
 			this.circleView = new System.Windows.Forms.GroupBox();
 			this.radius = new System.Windows.Forms.NumericUpDown();
@@ -72,10 +72,10 @@
 			// shapeView
 			// 
 			this.shapeView.FormattingEnabled = true;
-			this.shapeView.ItemHeight = 16;
-			this.shapeView.Location = new System.Drawing.Point(12, 60);
+			this.shapeView.Location = new System.Drawing.Point(9, 49);
+			this.shapeView.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
 			this.shapeView.Name = "shapeView";
-			this.shapeView.Size = new System.Drawing.Size(518, 388);
+			this.shapeView.Size = new System.Drawing.Size(390, 316);
 			this.shapeView.TabIndex = 11;
 			this.shapeView.SelectedIndexChanged += new System.EventHandler(this.shapeView_SelectedIndexChanged);
 			this.shapeView.KeyDown += new System.Windows.Forms.KeyEventHandler(this.shapeView_KeyDown);
@@ -83,19 +83,21 @@
 			// objectName
 			// 
 			this.objectName.AcceptsReturn = true;
-			this.objectName.Location = new System.Drawing.Point(545, 57);
+			this.objectName.Location = new System.Drawing.Point(409, 46);
+			this.objectName.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
 			this.objectName.MaxLength = 50;
 			this.objectName.Name = "objectName";
-			this.objectName.Size = new System.Drawing.Size(333, 22);
+			this.objectName.Size = new System.Drawing.Size(251, 20);
 			this.objectName.TabIndex = 1;
 			this.objectName.TextChanged += new System.EventHandler(this.objectName_TextChanged);
 			// 
 			// label4
 			// 
 			this.label4.AutoSize = true;
-			this.label4.Location = new System.Drawing.Point(542, 37);
+			this.label4.Location = new System.Drawing.Point(406, 30);
+			this.label4.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
 			this.label4.Name = "label4";
-			this.label4.Size = new System.Drawing.Size(45, 17);
+			this.label4.Size = new System.Drawing.Size(35, 13);
 			this.label4.TabIndex = 10;
 			this.label4.Text = "Name";
 			// 
@@ -106,7 +108,8 @@
             this.editToolStripMenuItem});
 			this.menuStrip1.Location = new System.Drawing.Point(0, 0);
 			this.menuStrip1.Name = "menuStrip1";
-			this.menuStrip1.Size = new System.Drawing.Size(894, 28);
+			this.menuStrip1.Padding = new System.Windows.Forms.Padding(4, 2, 0, 2);
+			this.menuStrip1.Size = new System.Drawing.Size(670, 24);
 			this.menuStrip1.TabIndex = 13;
 			this.menuStrip1.Text = "menuStrip1";
 			// 
@@ -115,13 +118,13 @@
 			this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.saveAsXMLToolStripMenuItem});
 			this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
-			this.fileToolStripMenuItem.Size = new System.Drawing.Size(44, 24);
+			this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
 			this.fileToolStripMenuItem.Text = "File";
 			// 
 			// saveAsXMLToolStripMenuItem
 			// 
 			this.saveAsXMLToolStripMenuItem.Name = "saveAsXMLToolStripMenuItem";
-			this.saveAsXMLToolStripMenuItem.Size = new System.Drawing.Size(162, 24);
+			this.saveAsXMLToolStripMenuItem.Size = new System.Drawing.Size(141, 22);
 			this.saveAsXMLToolStripMenuItem.Text = "Save As XML";
 			this.saveAsXMLToolStripMenuItem.Click += new System.EventHandler(this.saveAsXMLToolStripMenuItem_Click);
 			// 
@@ -131,42 +134,44 @@
             this.undoToolStripMenuItem,
             this.redoToolStripMenuItem});
 			this.editToolStripMenuItem.Name = "editToolStripMenuItem";
-			this.editToolStripMenuItem.Size = new System.Drawing.Size(47, 24);
+			this.editToolStripMenuItem.Size = new System.Drawing.Size(39, 20);
 			this.editToolStripMenuItem.Text = "Edit";
 			// 
 			// undoToolStripMenuItem
 			// 
 			this.undoToolStripMenuItem.Name = "undoToolStripMenuItem";
 			this.undoToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Z)));
-			this.undoToolStripMenuItem.Size = new System.Drawing.Size(165, 24);
+			this.undoToolStripMenuItem.Size = new System.Drawing.Size(144, 22);
 			this.undoToolStripMenuItem.Text = "Undo";
 			// 
 			// redoToolStripMenuItem
 			// 
 			this.redoToolStripMenuItem.Name = "redoToolStripMenuItem";
 			this.redoToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Y)));
-			this.redoToolStripMenuItem.Size = new System.Drawing.Size(165, 24);
+			this.redoToolStripMenuItem.Size = new System.Drawing.Size(144, 22);
 			this.redoToolStripMenuItem.Text = "Redo";
 			// 
-			// Circle
+			// ShapeCircle
 			// 
-			this.Circle.Location = new System.Drawing.Point(12, 31);
-			this.Circle.Name = "Circle";
-			this.Circle.Size = new System.Drawing.Size(150, 23);
-			this.Circle.TabIndex = 5;
-			this.Circle.Text = "Add Circle";
-			this.Circle.UseVisualStyleBackColor = true;
-			this.Circle.Click += new System.EventHandler(this.addCircle_Click);
+			this.ShapeCircle.Location = new System.Drawing.Point(9, 25);
+			this.ShapeCircle.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+			this.ShapeCircle.Name = "ShapeCircle";
+			this.ShapeCircle.Size = new System.Drawing.Size(112, 19);
+			this.ShapeCircle.TabIndex = 5;
+			this.ShapeCircle.Text = "Add Circle";
+			this.ShapeCircle.UseVisualStyleBackColor = true;
+			this.ShapeCircle.Click += new System.EventHandler(this.addCircle_Click);
 			// 
-			// Box
+			// ShapeRectangle
 			// 
-			this.Box.Location = new System.Drawing.Point(168, 31);
-			this.Box.Name = "Box";
-			this.Box.Size = new System.Drawing.Size(150, 23);
-			this.Box.TabIndex = 10;
-			this.Box.Text = "Add Box";
-			this.Box.UseVisualStyleBackColor = true;
-			this.Box.Click += new System.EventHandler(this.addBox_Click);
+			this.ShapeRectangle.Location = new System.Drawing.Point(126, 25);
+			this.ShapeRectangle.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+			this.ShapeRectangle.Name = "ShapeRectangle";
+			this.ShapeRectangle.Size = new System.Drawing.Size(112, 19);
+			this.ShapeRectangle.TabIndex = 10;
+			this.ShapeRectangle.Text = "Add Box";
+			this.ShapeRectangle.UseVisualStyleBackColor = true;
+			this.ShapeRectangle.Click += new System.EventHandler(this.addBox_Click);
 			// 
 			// circleView
 			// 
@@ -176,9 +181,11 @@
 			this.circleView.Controls.Add(this.label7);
 			this.circleView.Controls.Add(this.label9);
 			this.circleView.Controls.Add(this.label10);
-			this.circleView.Location = new System.Drawing.Point(545, 96);
+			this.circleView.Location = new System.Drawing.Point(409, 78);
+			this.circleView.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
 			this.circleView.Name = "circleView";
-			this.circleView.Size = new System.Drawing.Size(333, 86);
+			this.circleView.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+			this.circleView.Size = new System.Drawing.Size(250, 70);
 			this.circleView.TabIndex = 14;
 			this.circleView.TabStop = false;
 			this.circleView.Text = "Circle Attributes";
@@ -186,64 +193,70 @@
 			// radius
 			// 
 			this.radius.DecimalPlaces = 1;
-			this.radius.Location = new System.Drawing.Point(77, 55);
+			this.radius.Location = new System.Drawing.Point(58, 45);
+			this.radius.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
 			this.radius.Maximum = new decimal(new int[] {
             10000,
             0,
             0,
             0});
 			this.radius.Name = "radius";
-			this.radius.Size = new System.Drawing.Size(76, 22);
+			this.radius.Size = new System.Drawing.Size(57, 20);
 			this.radius.TabIndex = 12;
 			// 
 			// centerY
 			// 
-			this.centerY.Location = new System.Drawing.Point(250, 24);
+			this.centerY.Location = new System.Drawing.Point(188, 20);
+			this.centerY.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
 			this.centerY.Maximum = new decimal(new int[] {
             1080,
             0,
             0,
             0});
 			this.centerY.Name = "centerY";
-			this.centerY.Size = new System.Drawing.Size(76, 22);
+			this.centerY.Size = new System.Drawing.Size(57, 20);
 			this.centerY.TabIndex = 10;
 			// 
 			// centerX
 			// 
-			this.centerX.Location = new System.Drawing.Point(77, 24);
+			this.centerX.Location = new System.Drawing.Point(58, 20);
+			this.centerX.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
 			this.centerX.Maximum = new decimal(new int[] {
             1920,
             0,
             0,
             0});
 			this.centerX.Name = "centerX";
-			this.centerX.Size = new System.Drawing.Size(76, 22);
+			this.centerX.Size = new System.Drawing.Size(57, 20);
 			this.centerX.TabIndex = 9;
 			// 
 			// label7
 			// 
 			this.label7.AutoSize = true;
-			this.label7.Location = new System.Drawing.Point(8, 57);
+			this.label7.Location = new System.Drawing.Point(6, 46);
+			this.label7.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
 			this.label7.Name = "label7";
-			this.label7.Size = new System.Drawing.Size(52, 17);
+			this.label7.Size = new System.Drawing.Size(40, 13);
 			this.label7.TabIndex = 14;
 			this.label7.Text = "Radius";
 			// 
 			// label9
 			// 
 			this.label9.AutoSize = true;
-			this.label9.Location = new System.Drawing.Point(6, 26);
+			this.label9.Location = new System.Drawing.Point(4, 21);
+			this.label9.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
 			this.label9.Name = "label9";
-			this.label9.Size = new System.Drawing.Size(63, 17);
+			this.label9.Size = new System.Drawing.Size(48, 13);
 			this.label9.TabIndex = 11;
 			this.label9.Text = "Center X";
 			// 
 			// label10
 			// 
 			this.label10.AutoSize = true;
-			this.label10.Location = new System.Drawing.Point(181, 26);
+			this.label10.Location = new System.Drawing.Point(136, 21);
+			this.label10.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
 			this.label10.Name = "label10";
-			this.label10.Size = new System.Drawing.Size(63, 17);
+			this.label10.Size = new System.Drawing.Size(48, 13);
 			this.label10.TabIndex = 13;
 			this.label10.Text = "Center Y";
 			// 
@@ -257,122 +270,134 @@
 			this.boxView.Controls.Add(this.label6);
 			this.boxView.Controls.Add(this.label1);
 			this.boxView.Controls.Add(this.label3);
-			this.boxView.Location = new System.Drawing.Point(545, 96);
+			this.boxView.Location = new System.Drawing.Point(409, 78);
+			this.boxView.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
 			this.boxView.Name = "boxView";
-			this.boxView.Size = new System.Drawing.Size(333, 88);
+			this.boxView.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+			this.boxView.Size = new System.Drawing.Size(250, 72);
 			this.boxView.TabIndex = 15;
 			this.boxView.TabStop = false;
 			this.boxView.Text = "Box Attributes";
 			// 
 			// maxY
 			// 
-			this.maxY.Location = new System.Drawing.Point(229, 53);
+			this.maxY.Location = new System.Drawing.Point(172, 43);
+			this.maxY.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
 			this.maxY.Maximum = new decimal(new int[] {
             1080,
             0,
             0,
             0});
 			this.maxY.Name = "maxY";
-			this.maxY.Size = new System.Drawing.Size(96, 22);
+			this.maxY.Size = new System.Drawing.Size(72, 20);
 			this.maxY.TabIndex = 16;
 			// 
 			// maxX
 			// 
-			this.maxX.Location = new System.Drawing.Point(56, 56);
+			this.maxX.Location = new System.Drawing.Point(42, 46);
+			this.maxX.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
 			this.maxX.Maximum = new decimal(new int[] {
             1920,
             0,
             0,
             0});
 			this.maxX.Name = "maxX";
-			this.maxX.Size = new System.Drawing.Size(96, 22);
+			this.maxX.Size = new System.Drawing.Size(72, 20);
 			this.maxX.TabIndex = 14;
 			// 
 			// minY
 			// 
-			this.minY.Location = new System.Drawing.Point(229, 22);
+			this.minY.Location = new System.Drawing.Point(172, 18);
+			this.minY.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
 			this.minY.Maximum = new decimal(new int[] {
             1080,
             0,
             0,
             0});
 			this.minY.Name = "minY";
-			this.minY.Size = new System.Drawing.Size(96, 22);
+			this.minY.Size = new System.Drawing.Size(72, 20);
 			this.minY.TabIndex = 13;
 			// 
 			// minX
 			// 
-			this.minX.Location = new System.Drawing.Point(56, 22);
+			this.minX.Location = new System.Drawing.Point(42, 18);
+			this.minX.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
 			this.minX.Maximum = new decimal(new int[] {
             1920,
             0,
             0,
             0});
 			this.minX.Name = "minX";
-			this.minX.Size = new System.Drawing.Size(96, 22);
+			this.minX.Size = new System.Drawing.Size(72, 20);
 			this.minX.TabIndex = 12;
 			// 
 			// label5
 			// 
 			this.label5.AutoSize = true;
-			this.label5.Location = new System.Drawing.Point(7, 58);
+			this.label5.Location = new System.Drawing.Point(5, 47);
+			this.label5.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
 			this.label5.Name = "label5";
-			this.label5.Size = new System.Drawing.Size(46, 17);
+			this.label5.Size = new System.Drawing.Size(37, 13);
 			this.label5.TabIndex = 15;
 			this.label5.Text = "Max X";
 			// 
 			// label6
 			// 
 			this.label6.AutoSize = true;
-			this.label6.Location = new System.Drawing.Point(180, 58);
+			this.label6.Location = new System.Drawing.Point(135, 47);
+			this.label6.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
 			this.label6.Name = "label6";
-			this.label6.Size = new System.Drawing.Size(46, 17);
+			this.label6.Size = new System.Drawing.Size(37, 13);
 			this.label6.TabIndex = 17;
 			this.label6.Text = "Max Y";
 			// 
 			// label1
 			// 
 			this.label1.AutoSize = true;
-			this.label1.Location = new System.Drawing.Point(7, 24);
+			this.label1.Location = new System.Drawing.Point(5, 20);
+			this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
 			this.label1.Name = "label1";
-			this.label1.Size = new System.Drawing.Size(43, 17);
+			this.label1.Size = new System.Drawing.Size(34, 13);
 			this.label1.TabIndex = 10;
 			this.label1.Text = "Min X";
 			// 
 			// label3
 			// 
 			this.label3.AutoSize = true;
-			this.label3.Location = new System.Drawing.Point(180, 24);
+			this.label3.Location = new System.Drawing.Point(135, 20);
+			this.label3.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
 			this.label3.Name = "label3";
-			this.label3.Size = new System.Drawing.Size(43, 17);
+			this.label3.Size = new System.Drawing.Size(34, 13);
 			this.label3.TabIndex = 11;
 			this.label3.Text = "Min Y";
 			// 
 			// useTcp
 			// 
 			this.useTcp.AutoSize = true;
-			this.useTcp.Location = new System.Drawing.Point(324, 33);
+			this.useTcp.Location = new System.Drawing.Point(243, 27);
+			this.useTcp.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
 			this.useTcp.Name = "useTcp";
-			this.useTcp.Size = new System.Drawing.Size(86, 21);
+			this.useTcp.Size = new System.Drawing.Size(69, 17);
 			this.useTcp.TabIndex = 16;
 			this.useTcp.Text = "Use TCP";
 			this.useTcp.UseVisualStyleBackColor = true;
 			// 
 			// Form1
 			// 
-			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(894, 508);
+			this.ClientSize = new System.Drawing.Size(670, 413);
 			this.Controls.Add(this.useTcp);
 			this.Controls.Add(this.boxView);
 			this.Controls.Add(this.circleView);
-			this.Controls.Add(this.Box);
-			this.Controls.Add(this.Circle);
+			this.Controls.Add(this.ShapeRectangle);
+			this.Controls.Add(this.ShapeCircle);
 			this.Controls.Add(this.label4);
 			this.Controls.Add(this.objectName);
 			this.Controls.Add(this.shapeView);
 			this.Controls.Add(this.menuStrip1);
 			this.MainMenuStrip = this.menuStrip1;
+			this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
 			this.Name = "Form1";
 			this.Text = "Tool-native-Runtime-Communication";
 			this.Load += new System.EventHandler(this.Form1_Load);
@@ -405,8 +430,8 @@
 		private System.Windows.Forms.ToolStripMenuItem editToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem undoToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem redoToolStripMenuItem;
-		private System.Windows.Forms.Button Circle;
-		private System.Windows.Forms.Button Box;
+		private System.Windows.Forms.Button ShapeCircle;
+		private System.Windows.Forms.Button ShapeRectangle;
 		private System.Windows.Forms.SaveFileDialog saveXmlDialog;
 		private System.Windows.Forms.GroupBox circleView;
 		private System.Windows.Forms.NumericUpDown radius;

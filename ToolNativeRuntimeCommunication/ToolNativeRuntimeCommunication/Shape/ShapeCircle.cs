@@ -7,9 +7,16 @@ using System.Windows.Forms;
 
 namespace ToolNativeRuntimeCommunication
 {
-
 	public class ShapeCircle : Shape
 	{
+        public ShapeCircle(string name)
+            : base(name)
+        {
+            CenterX = 0;
+            CenterY = 0;
+            Radius = 0.0f;
+        }
+
 		public ShapeCircle(string name,
 			int centerX,
 			int centerY,

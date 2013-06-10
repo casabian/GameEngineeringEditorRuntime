@@ -10,7 +10,7 @@ namespace ToolNativeRuntimeCommunication
 	/// </summary>
 	public static class XMLTextWriter
 	{
-		public static void AsFile(BindingList<Shape> data, string filePath)
+        public static void AsFile(BindingList<Shape> data, string filePath)
 		{
 			XmlWriterSettings settings = new XmlWriterSettings { Indent = false, NewLineHandling = NewLineHandling.None };
 			if (!File.Exists(filePath))
@@ -20,7 +20,7 @@ namespace ToolNativeRuntimeCommunication
 			writeData(ref data, ref writer);
 		}
 
-		public static void AsString(BindingList<Shape> data, ref string output)
+        public static void AsString(BindingList<Shape> data, ref string output)
 		{
 			XmlWriterSettings settings = new XmlWriterSettings { Indent = false, NewLineHandling = NewLineHandling.None };
 
@@ -31,14 +31,14 @@ namespace ToolNativeRuntimeCommunication
 			output = sb.ToString();
 		}
 
-		
-		private static void writeData(ref BindingList<Shape> data, ref XmlWriter writer)
+
+        private static void writeData(ref BindingList<Shape> data, ref XmlWriter writer)
 		{
 			writer.WriteStartDocument();
 			{
 				writer.WriteStartElement("Shapes");
 				{
-					foreach (Shape shape in data)
+                    foreach (Shape shape in data)
 						shape.Serialize(ref writer);
 				}
 				writer.WriteEndElement();

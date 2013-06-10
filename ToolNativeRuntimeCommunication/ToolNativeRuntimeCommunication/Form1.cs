@@ -7,7 +7,7 @@ namespace ToolNativeRuntimeCommunication
 {
 	public partial class Form1 : Form
 	{
-		private BindingList<Shape> shapesList = new BindingList<Shape>();
+        private BindingList<Shape> shapesList = new BindingList<Shape>();
 
 		private Server server = new Server();
 
@@ -39,7 +39,7 @@ namespace ToolNativeRuntimeCommunication
 		{
 			if (shapeView.SelectedIndex > -1)
 			{
-				Shape shape = shapesList[shapeView.SelectedIndex];
+                Shape shape = shapesList[shapeView.SelectedIndex];
 				objectName.Text = shape.Name;
 
 				shape.UpdateView();
@@ -50,7 +50,7 @@ namespace ToolNativeRuntimeCommunication
 
 		private void shapeView_KeyDown(object sender, KeyEventArgs e)
 		{
-			if (e.KeyCode == Keys.Delete)
+			if (e.KeyCode == Keys.Delete && shapeView.SelectedIndex > -1)
 			{
 				shapesList.RemoveAt(shapeView.SelectedIndex);
 				UpdateShapeAttributes(this, EventArgs.Empty);
@@ -59,8 +59,7 @@ namespace ToolNativeRuntimeCommunication
 
 		private void addCircle_Click(object sender, EventArgs e)
 		{
-			Shape shape = ShapeFactory.Create(Circle.Name, objectName.Text);
-
+            Shape shape = ShapeFactory.Create(ShapeCircle.Name, objectName.Text);
 			shape.RegisterView(ref circleView);
 			shapesList.Add(shape);
 			UpdateShapeAttributes(this, EventArgs.Empty);
@@ -70,7 +69,7 @@ namespace ToolNativeRuntimeCommunication
 
 		private void addBox_Click(object sender, EventArgs e)
 		{
-			Shape shape = ShapeFactory.Create(Box.Name, objectName.Text);
+            Shape shape = ShapeFactory.Create(ShapeRectangle.Name, objectName.Text);
 			shape.RegisterView(ref boxView);
 			shapesList.Add(shape);
 			UpdateShapeAttributes(this, EventArgs.Empty);
