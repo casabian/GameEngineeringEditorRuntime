@@ -36,18 +36,25 @@ namespace ToolNativeRuntimeCommunication
 				TcpClient client = tcpListener.AcceptTcpClient();
 				while (client.Connected)
 				{
-					if (MessageToSend.Length > 0)
+					if (MessageToSend.Length == 0)
+						continue;
+
+					string message;
+					lock (MessageToSend)
 					{
-						string message;
-						lock (MessageToSend)
-						{
-							message = MessageToSend;
-							MessageToSend = "";
-						}
-						byte[] buffer = asciiEncoding.GetBytes(message + "\r\n");
+						message = MessageToSend;
+						MessageToSend = "";
+					}
+					byte[] buffer = asciiEncoding.GetBytes(message + "\r\n");
+					try
+					{
 						NetworkStream stream = client.GetStream();
 						stream.Write(buffer, 0, buffer.Length);
 						stream.Flush();
+					}
+					catch (System.IO.IOException e)
+					{
+						Console.WriteLine(e.Data);
 					}
 				}
 			}

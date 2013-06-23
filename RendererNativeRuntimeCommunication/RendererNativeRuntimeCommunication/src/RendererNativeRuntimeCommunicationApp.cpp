@@ -50,18 +50,29 @@ void RendererNativeRuntimeCommunicationApp::setup()
 void RendererNativeRuntimeCommunicationApp::keyDown(KeyEvent event)
 {
 	if(event.getCode() == event.KEY_F5)
-		receivedXml = loadString(loadFile(getAppPath().string() + "/data/shapes.xml"));
+	{
+		boost::mutex::scoped_lock lock(receivedXmlMutex);
+		receivedXml = loadString(loadFile(getAppPath().string() + "/data/shapes.xml")); 
+	}
 }
 
 void RendererNativeRuntimeCommunicationApp::update()
 {
 	client.update();
+
 	if (receivedXml != "")
 	{
-		boost::mutex::scoped_lock(receivedXmlMutex);
-		Parser::Parse(receivedXml, shapeList);
-		receivedXml = "";
+		boost::mutex::scoped_lock lock(receivedXmlMutex);
+		try 
+		{
+			Parser::Parse(receivedXml, shapeList);
+		}
+		catch (const std::exception& e)
+		{
+			ci::app::console() << "Renderer::update: " << e.what() << std::endl;
+		}
 	}
+
 }
 
 void RendererNativeRuntimeCommunicationApp::draw()
@@ -91,7 +102,7 @@ void RendererNativeRuntimeCommunicationApp::OnClientDisconnect(const boost::asio
 
 void RendererNativeRuntimeCommunicationApp::OnClientMessage(const std::string& message)
 {
-	boost::mutex::scoped_lock(receivedXmlMutex);
+	boost::mutex::scoped_lock lock(receivedXmlMutex);
 	receivedXml = message;
 }
 

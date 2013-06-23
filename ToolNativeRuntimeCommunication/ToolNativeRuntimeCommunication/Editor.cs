@@ -5,15 +5,13 @@ using System.Linq;
 
 namespace ToolNativeRuntimeCommunication
 {
-	public partial class Form1 : Form
+	public partial class Editor : Form
 	{
-		private BindingList<Shape> shapesList = new BindingList<Shape>();
+        private BindingList<Shape> shapesList = new BindingList<Shape>();
 
 		private Server server = new Server();
 
-		private UndoRedo.UndoRedoManager undoRedoManager = new UndoRedo.UndoRedoManager();
-
-		public Form1()
+		public Editor()
 		{
 			InitializeComponent();
 
@@ -30,9 +28,6 @@ namespace ToolNativeRuntimeCommunication
 
 			server.Start();
 
-			undoRedoManager.RedoNotifier += new UndoRedo.RedoHandler( EnableRedo );
-			undoRedoManager.UndoNotifier += new UndoRedo.UndoHandler( EnableUndo );
-
 			SetVisibilityOfAllGroupBoxesExcept(false, null);
 		}
 
@@ -44,13 +39,12 @@ namespace ToolNativeRuntimeCommunication
 		{
 			if (shapeView.SelectedIndex > -1)
 			{
-				Shape shape = shapesList[shapeView.SelectedIndex];
+                Shape shape = shapesList[shapeView.SelectedIndex];
 				objectName.Text = shape.Name;
 
 				shape.UpdateView();
-				GroupBox view = new GroupBox();
-				shape.GetView( ref view );
-				SetVisibilityOfAllGroupBoxesExcept( false, view.Name );
+
+				SetVisibilityOfAllGroupBoxesExcept(false, shape.GetView().Name);
 			}
 		}
 
@@ -58,11 +52,6 @@ namespace ToolNativeRuntimeCommunication
 		{
 			if (e.KeyCode == Keys.Delete && shapeView.SelectedIndex > -1)
 			{
-				Shape shapeToDelete = (shapeView.SelectedItem as Shape);
-				GroupBox view = new GroupBox();
-				shapeToDelete.GetView( ref view );
-				undoRedoManager.AddAction( new UndoRedo.ActionDelete( shapeToDelete, shapesList, ref view, ref shapeView ) );
-				
 				shapesList.RemoveAt(shapeView.SelectedIndex);
 				UpdateShapeAttributes(this, EventArgs.Empty);
 			}
@@ -70,32 +59,24 @@ namespace ToolNativeRuntimeCommunication
 
 		private void addCircle_Click(object sender, EventArgs e)
 		{
-			Shape shape = Shape.Create(ShapeCircle.Name, objectName.Text);
+            Shape shape = Shape.Create(ShapeCircle.Name, objectName.Text);
 			shape.RegisterView(ref circleView);
 			shapesList.Add(shape);
 			UpdateShapeAttributes(this, EventArgs.Empty);
 			SetVisibilityOfAllGroupBoxesExcept(true, boxView.Name);
-			shapeView.SelectedIndex = shapeView.Items.Count - 1;
-
-			GroupBox view = new GroupBox();
-			shape.GetView( ref view );
-			undoRedoManager.AddAction( new UndoRedo.ActionAdd( shape, shapesList, ref view, ref shapeView ) );
+			shapeView.SelectedIndex = shapeView.Items.Count - 1;		
 		}
 
 		private void addBox_Click(object sender, EventArgs e)
 		{
-			Shape shape = Shape.Create(ShapeRectangle.Name, objectName.Text);
+            Shape shape = Shape.Create(ShapeRectangle.Name, objectName.Text);
 			shape.RegisterView(ref boxView);
 			shapesList.Add(shape);
 			UpdateShapeAttributes(this, EventArgs.Empty);
 			SetVisibilityOfAllGroupBoxesExcept(true, circleView.Name);
 			shapeView.SelectedIndex = shapeView.Items.Count - 1;
-
-			GroupBox view = new GroupBox();
-			shape.GetView( ref view );
-			undoRedoManager.AddAction( new UndoRedo.ActionAdd( shape, shapesList, ref view, ref shapeView ) );
 		}
-		
+
 		private void SetVisibilityOfAllGroupBoxesExcept(bool visibility, string except)
 		{
 			foreach (Control control in Controls.OfType<GroupBox>())
@@ -125,54 +106,21 @@ namespace ToolNativeRuntimeCommunication
 
 		private void UpdateShapeAttributes(object sender, EventArgs e)
 		{
-			if ( shapeView.Items.Count > 0 )
-			{
-				Shape shapeBeforeEdit = shapesList[shapeView.SelectedIndex].Clone();
-				
+			if (shapeView.Items.Count > 0)
 				shapesList[shapeView.SelectedIndex].UpdateAttributes();
-
-				undoRedoManager.AddAction( new UndoRedo.ActionEdit( shapesList[shapeView.SelectedIndex], shapesList, shapeBeforeEdit ) );
-				
-			}
 			shapeView.DataSource = null;
 			shapeView.DataSource = shapesList;
 
-			SerializeShapesAndSend();
-		}
-
-		private void SerializeShapesAndSend()
-		{
-			if (!useTcp.Checked)
-				return;
-			string xmlString = "";
-			XMLTextWriter.AsString(shapesList, ref xmlString);
-
-			lock (server.MessageToSend)
+			if (useTcp.Checked)
 			{
-				server.MessageToSend = xmlString;
+				string xmlString = "";
+				XMLTextWriter.AsString(shapesList, ref xmlString);
+
+				lock (server.MessageToSend)
+				{
+					server.MessageToSend = xmlString;
+				}
 			}
-		}
-
-		public void EnableUndo( bool enable )
-		{
-			undoToolStripMenuItem.Enabled = enable;
-			SerializeShapesAndSend();
-		}
-
-		public void EnableRedo( bool enable )
-		{
-			redoToolStripMenuItem.Enabled = enable;
-			SerializeShapesAndSend();
-		}
-
-		private void undoToolStripMenuItem_Click( object sender, EventArgs e )
-		{
-			undoRedoManager.Undo();
-		}
-
-		private void redoToolStripMenuItem_Click( object sender, EventArgs e )
-		{
-			undoRedoManager.Redo();
 		}
 	}
 }

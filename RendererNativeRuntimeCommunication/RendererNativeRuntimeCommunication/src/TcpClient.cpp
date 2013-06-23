@@ -44,20 +44,43 @@ void TcpClient::connect( const tcp_endpoint& endpoint )
 	if (m_Connected) 
 		return;
 	m_Endpoint = endpoint;
-	m_Socket.async_connect(m_Endpoint,
-		boost::bind(&TcpClient::onConnect, this, boost::asio::placeholders::error)
-	);
+	
+	try
+	{
+		m_Socket.async_connect(m_Endpoint,
+			boost::bind(&TcpClient::onConnect, this, boost::asio::placeholders::error)
+			);
+	}
+	catch (const std::exception& e)
+	{
+		ci::app::console() << "TcpClient::connect: " << e.what() << std::endl;
+	}
 }
 
 void TcpClient::update()
 {
-	m_IoService.poll();
+	try
+	{
+		m_IoService.poll();
+	}
+	catch (const std::exception& e)
+	{
+		ci::app::console() << "TcpClient::update: " << e.what() << std::endl;
+	}
 }
 
 void TcpClient::read()
 {
-	boost::asio::async_read_until(m_Socket, m_ResponseBuffer, m_Delimiter,
-		boost::bind(&TcpClient::onRead, this, boost::asio::placeholders::error));
+	try
+	{
+		boost::asio::async_read_until(m_Socket, m_ResponseBuffer, m_Delimiter,
+			boost::bind(&TcpClient::onRead, this, boost::asio::placeholders::error));	
+	}
+	catch (const std::exception& e)
+	{
+		ci::app::console() << "TcpClient::read: " << e.what() << std::endl;
+	}
+
 }
 
 void TcpClient::onConnect( const boost::system::error_code& error )
