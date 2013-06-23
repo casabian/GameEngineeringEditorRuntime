@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.ComponentModel;
 using System.Linq;
-using System.Text;
-using System.ComponentModel;
 
 namespace ToolNativeRuntimeCommunication.UndoRedo
 {
@@ -17,10 +14,11 @@ namespace ToolNativeRuntimeCommunication.UndoRedo
 		{
 			this.shape = shape;
 			this.shapesList = shapesList;
-			this.affectedListIndex = shapesList.TakeWhile( s => s != shape).Count();
+			this.affectedListIndex = shapesList.TakeWhile( s => s != shape ).Count();
 		}
 
 		abstract public void Undo();
+
 		abstract public void Redo();
 	}
 }

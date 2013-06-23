@@ -48,8 +48,9 @@ namespace ToolNativeRuntimeCommunication
 				objectName.Text = shape.Name;
 
 				shape.UpdateView();
-
-				SetVisibilityOfAllGroupBoxesExcept(false, shape.GetView().Name);
+				GroupBox view = new GroupBox();
+				shape.GetView( ref view );
+				SetVisibilityOfAllGroupBoxesExcept( false, view.Name );
 			}
 		}
 
@@ -58,8 +59,9 @@ namespace ToolNativeRuntimeCommunication
 			if (e.KeyCode == Keys.Delete && shapeView.SelectedIndex > -1)
 			{
 				Shape shapeToDelete = (shapeView.SelectedItem as Shape);
-				GroupBox view = shapeToDelete.GetView();
-				undoRedoManager.AddActionDelete( shapeToDelete, shapesList, ref view, ref shapeView );
+				GroupBox view = new GroupBox();
+				shapeToDelete.GetView( ref view );
+				undoRedoManager.AddAction( new UndoRedo.ActionDelete( shapeToDelete, shapesList, ref view, ref shapeView ) );
 				
 				shapesList.RemoveAt(shapeView.SelectedIndex);
 				UpdateShapeAttributes(this, EventArgs.Empty);
@@ -75,8 +77,9 @@ namespace ToolNativeRuntimeCommunication
 			SetVisibilityOfAllGroupBoxesExcept(true, boxView.Name);
 			shapeView.SelectedIndex = shapeView.Items.Count - 1;
 
-			GroupBox view = shape.GetView();
-			undoRedoManager.AddActionAdd( shape, shapesList, ref view, ref shapeView );
+			GroupBox view = new GroupBox();
+			shape.GetView( ref view );
+			undoRedoManager.AddAction( new UndoRedo.ActionAdd( shape, shapesList, ref view, ref shapeView ) );
 		}
 
 		private void addBox_Click(object sender, EventArgs e)
@@ -88,10 +91,11 @@ namespace ToolNativeRuntimeCommunication
 			SetVisibilityOfAllGroupBoxesExcept(true, circleView.Name);
 			shapeView.SelectedIndex = shapeView.Items.Count - 1;
 
-			GroupBox view = shape.GetView();
-			undoRedoManager.AddActionAdd( shape, shapesList, ref view, ref shapeView );
+			GroupBox view = new GroupBox();
+			shape.GetView( ref view );
+			undoRedoManager.AddAction( new UndoRedo.ActionAdd( shape, shapesList, ref view, ref shapeView ) );
 		}
-
+		
 		private void SetVisibilityOfAllGroupBoxesExcept(bool visibility, string except)
 		{
 			foreach (Control control in Controls.OfType<GroupBox>())
@@ -123,10 +127,11 @@ namespace ToolNativeRuntimeCommunication
 		{
 			if ( shapeView.Items.Count > 0 )
 			{
-				Shape shapeBeforeEdit = shapesList[shapeView.SelectedIndex];
+				Shape shapeBeforeEdit = shapesList[shapeView.SelectedIndex].Clone();
+				
 				shapesList[shapeView.SelectedIndex].UpdateAttributes();
 
-				undoRedoManager.AddActionEdit( shapesList[shapeView.SelectedIndex], shapesList, shapeBeforeEdit );
+				undoRedoManager.AddAction( new UndoRedo.ActionEdit( shapesList[shapeView.SelectedIndex], shapesList, shapeBeforeEdit ) );
 				
 			}
 			shapeView.DataSource = null;

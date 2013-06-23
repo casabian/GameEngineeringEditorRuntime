@@ -1,5 +1,4 @@
-﻿using System;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Threading;
 
 namespace ToolNativeRuntimeCommunication.UndoRedo
@@ -9,7 +8,7 @@ namespace ToolNativeRuntimeCommunication.UndoRedo
 		public Shape shapeBeforeEdit;
 
 		public ActionEdit( Shape shape, BindingList<Shape> shapesList, Shape shapeBeforeEdit )
-			: base(shape, shapesList)
+			: base( shape, shapesList )
 		{
 			this.shapeBeforeEdit = shapeBeforeEdit;
 		}

@@ -1,66 +1,66 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Xml;
 using System.Windows.Forms;
+using System.Xml;
 
 namespace ToolNativeRuntimeCommunication
 {
 	public interface IShape
 	{
-		void Serialize(ref XmlWriter xmlWriter);
+		void GetView( ref GroupBox view );
 
-		GroupBox GetView();
+		void RegisterView( ref GroupBox view );
 
-		void UpdateView();
-
+		void Serialize( ref XmlWriter xmlWriter );
+		
 		void UpdateAttributes();
 
-		void RegisterView(ref GroupBox view);
+		void UpdateView();
 	}
 
 	public abstract class Shape : IShape
 	{
-		public Shape(string name)
+		public Shape( string name )
 		{
 			Name = name;
 		}
 
-		public Shape(Shape other)
+		public Shape( Shape other )
 		{
 			Name = other.Name;
-		}
-		
-		public override string ToString()
-		{
-			return Name;
+			view = other.view;
 		}
 
-		public virtual GroupBox GetView()
+		public string Name { get; set; }
+
+		protected GroupBox view { get; set; }
+
+		// copy constructor not working =/
+		abstract public Shape Clone();
+
+		public static Shape Create( string typeString, string name )
 		{
-			return view;
+			Type type = Type.GetType( "ToolNativeRuntimeCommunication." + typeString );
+			return (Shape)Activator.CreateInstance( type, name );
 		}
 
-		public virtual void RegisterView(ref GroupBox view)
+		public virtual void GetView( ref GroupBox view )
+		{
+			view = this.view;
+		}
+
+		public virtual void RegisterView( ref GroupBox view )
 		{
 			this.view = view;
 		}
 
-        public static Shape Create(string typeString, string name)
-        {
-            Type type = Type.GetType("ToolNativeRuntimeCommunication." + typeString);
-            return (Shape)Activator.CreateInstance(type, name);
-        }
-        
-        public abstract void Serialize(ref XmlWriter xmlWriter);
+		public abstract void Serialize( ref XmlWriter xmlWriter );
 
-		public abstract void UpdateView();
-
+		public override string ToString()
+		{
+			return Name;
+		}
 		public abstract void UpdateAttributes();
 
-		public string Name { get; set; }
-		
-        protected GroupBox view { get; set; }
+		public abstract void UpdateView();
 	}
 }

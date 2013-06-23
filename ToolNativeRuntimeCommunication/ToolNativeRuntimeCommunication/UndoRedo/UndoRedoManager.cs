@@ -5,68 +5,56 @@ using System.Windows.Forms;
 namespace ToolNativeRuntimeCommunication.UndoRedo
 {
 	public delegate void UndoHandler( bool enable );
+
 	public delegate void RedoHandler( bool enable );
-	
+
 	public class UndoRedoManager
 	{
 		public UndoHandler UndoNotifier;
 		public RedoHandler RedoNotifier;
 
-		private List<Action> actions = new List<Action>();
+		private Stack<Action> undoStack = new Stack<Action>();
+		private Stack<Action> redoStack = new Stack<Action>();
 
-		private int currentActionIndex = 0;
+		public bool HasUndo { get { return undoStack.Count > 0; } }
 
-		public void AddActionAdd( Shape shape, BindingList<Shape> shapesList, ref GroupBox shapeView, ref ListBox shapesListView )
+		public bool HasRedo { get { return redoStack.Count > 0; } }
+
+		public void AddAction( Action action )
 		{
-			actions.Add( new ActionAdd( shape, shapesList, ref shapeView, ref shapesListView ) );
-			UpdateValues();
-		}
+			redoStack.Clear();
 
-		public void AddActionDelete( Shape shape, BindingList<Shape> shapesList, ref GroupBox shapeView, ref ListBox shapesListView )
-		{
-			actions.Add( new ActionDelete( shape, shapesList, ref shapeView, ref shapesListView ) );
-			UpdateValues();
-		}
+			undoStack.Push( action );
 
-		public void AddActionEdit( Shape shape, BindingList<Shape> shapesList, Shape shapeBeforeEdit )
-		{
-			actions.Add( new ActionEdit( shape, shapesList, shapeBeforeEdit ) );
-			UpdateValues();
+			UpdateNotifier();
 		}
 
 		public void Undo()
 		{
-			actions[currentActionIndex - 1].Undo();
+			if ( !HasUndo )
+				return;
 			
-			if ( currentActionIndex == 0 && UndoNotifier != null )
-				UndoNotifier( false );
-
-			--currentActionIndex;
-
-			if ( RedoNotifier != null )
-				RedoNotifier( true );
+			Action action = undoStack.Pop();
+			action.Undo();
+			redoStack.Push( action );
+			UpdateNotifier();
 		}
 
 		public void Redo()
 		{
-			++currentActionIndex;
-			if ( currentActionIndex == actions.Count - 1 && RedoNotifier != null )
-				RedoNotifier( false );
-			actions[currentActionIndex - 1].Redo();
-
-			if ( UndoNotifier != null )
-				UndoNotifier( true );
+			if ( !HasRedo )
+				return;
+			
+			Action action = redoStack.Pop();
+			action.Redo();
+			undoStack.Push( action );
+			UpdateNotifier();
 		}
 
-		private void UpdateValues()
+		private void UpdateNotifier()
 		{
-			if ( currentActionIndex < actions.Count - 1 )
-			{
-				actions.RemoveRange( currentActionIndex + 1, actions.Count - currentActionIndex - 1 );
-				if ( RedoNotifier != null )
-					RedoNotifier( false );
-			}
-			currentActionIndex = actions.Count;
+			RedoNotifier( HasRedo );
+			UndoNotifier( HasUndo );
 		}
 	}
 }

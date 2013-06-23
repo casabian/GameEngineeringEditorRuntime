@@ -11,7 +11,6 @@ namespace ToolNativeRuntimeCommunication.UndoRedo
 		}
 
 		override public void Redo()
-
 		{
 			base.Undo();
 		}
