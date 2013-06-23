@@ -57,6 +57,23 @@
     <Compile Include="Server.cs" />
     <Compile Include="Shape\Shape.cs" />
     <Compile Include="Shape\ShapeCircle.cs" />
+    <Compile Include="Shape\ShapeCircleControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Shape\ShapeCircleControl.Designer.cs">
+      <DependentUpon>ShapeCircleControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Shape\ShapeRectangleControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Shape\ShapeRectangleControl.Designer.cs">
+      <DependentUpon>ShapeRectangleControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UndoRedo\Action.cs" />
+    <Compile Include="UndoRedo\ActionAdd.cs" />
+    <Compile Include="UndoRedo\ActionDelete.cs" />
+    <Compile Include="UndoRedo\ActionEdit.cs" />
+    <Compile Include="UndoRedo\UndoRedoManager.cs" />
     <Compile Include="XMLTextWriter.cs" />
     <Compile Include="Shape\ShapeRectangle.cs" />
     <EmbeddedResource Include="Form1.resx">
@@ -71,6 +88,12 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="Shape\ShapeCircleControl.resx">
+      <DependentUpon>ShapeCircleControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Shape\ShapeRectangleControl.resx">
+      <DependentUpon>ShapeRectangleControl.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="Properties\DataSources\Form1.datasource" />
     <None Include="Properties\DataSources\Program.datasource" />
     <None Include="Properties\Settings.settings">

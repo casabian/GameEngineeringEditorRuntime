@@ -60,6 +60,7 @@ namespace ToolNativeRuntimeCommunication
 		public abstract void UpdateAttributes();
 
 		public string Name { get; set; }
-		protected GroupBox view { get; set; }
+		
+        protected GroupBox view { get; set; }
 	}
 }

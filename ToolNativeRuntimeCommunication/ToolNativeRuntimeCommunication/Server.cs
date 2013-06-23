@@ -44,7 +44,6 @@ namespace ToolNativeRuntimeCommunication
 							message = MessageToSend;
 							MessageToSend = "";
 						}
-						Console.WriteLine(message);
 						byte[] buffer = asciiEncoding.GetBytes(message + "\r\n");
 						NetworkStream stream = client.GetStream();
 						stream.Write(buffer, 0, buffer.Length);

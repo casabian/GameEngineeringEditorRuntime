@@ -11,6 +11,8 @@ namespace ToolNativeRuntimeCommunication
 
 		private Server server = new Server();
 
+		private UndoRedo.UndoRedoManager undoRedoManager = new UndoRedo.UndoRedoManager();
+
 		public Form1()
 		{
 			InitializeComponent();
@@ -27,6 +29,9 @@ namespace ToolNativeRuntimeCommunication
 			radius.Validated += new EventHandler(UpdateShapeAttributes);
 
 			server.Start();
+
+			undoRedoManager.RedoNotifier += new UndoRedo.RedoHandler( EnableRedo );
+			undoRedoManager.UndoNotifier += new UndoRedo.UndoHandler( EnableUndo );
 
 			SetVisibilityOfAllGroupBoxesExcept(false, null);
 		}
@@ -52,6 +57,10 @@ namespace ToolNativeRuntimeCommunication
 		{
 			if (e.KeyCode == Keys.Delete && shapeView.SelectedIndex > -1)
 			{
+				Shape shapeToDelete = (shapeView.SelectedItem as Shape);
+				GroupBox view = shapeToDelete.GetView();
+				undoRedoManager.AddActionDelete( shapeToDelete, shapesList, ref view, ref shapeView );
+				
 				shapesList.RemoveAt(shapeView.SelectedIndex);
 				UpdateShapeAttributes(this, EventArgs.Empty);
 			}
@@ -64,7 +73,10 @@ namespace ToolNativeRuntimeCommunication
 			shapesList.Add(shape);
 			UpdateShapeAttributes(this, EventArgs.Empty);
 			SetVisibilityOfAllGroupBoxesExcept(true, boxView.Name);
-			shapeView.SelectedIndex = shapeView.Items.Count - 1;		
+			shapeView.SelectedIndex = shapeView.Items.Count - 1;
+
+			GroupBox view = shape.GetView();
+			undoRedoManager.AddActionAdd( shape, shapesList, ref view, ref shapeView );
 		}
 
 		private void addBox_Click(object sender, EventArgs e)
@@ -75,6 +87,9 @@ namespace ToolNativeRuntimeCommunication
 			UpdateShapeAttributes(this, EventArgs.Empty);
 			SetVisibilityOfAllGroupBoxesExcept(true, circleView.Name);
 			shapeView.SelectedIndex = shapeView.Items.Count - 1;
+
+			GroupBox view = shape.GetView();
+			undoRedoManager.AddActionAdd( shape, shapesList, ref view, ref shapeView );
 		}
 
 		private void SetVisibilityOfAllGroupBoxesExcept(bool visibility, string except)
@@ -106,8 +121,14 @@ namespace ToolNativeRuntimeCommunication
 
 		private void UpdateShapeAttributes(object sender, EventArgs e)
 		{
-			if (shapeView.Items.Count > 0)
+			if ( shapeView.Items.Count > 0 )
+			{
+				Shape shapeBeforeEdit = shapesList[shapeView.SelectedIndex];
 				shapesList[shapeView.SelectedIndex].UpdateAttributes();
+
+				undoRedoManager.AddActionEdit( shapesList[shapeView.SelectedIndex], shapesList, shapeBeforeEdit );
+				
+			}
 			shapeView.DataSource = null;
 			shapeView.DataSource = shapesList;
 
@@ -121,6 +142,26 @@ namespace ToolNativeRuntimeCommunication
 					server.MessageToSend = xmlString;
 				}
 			}
+		}
+
+		public void EnableUndo( bool enable )
+		{
+			undoToolStripMenuItem.Enabled = enable;
+		}
+
+		public void EnableRedo( bool enable )
+		{
+			redoToolStripMenuItem.Enabled = enable;
+		}
+
+		private void undoToolStripMenuItem_Click( object sender, EventArgs e )
+		{
+			undoRedoManager.Undo();
+		}
+
+		private void redoToolStripMenuItem_Click( object sender, EventArgs e )
+		{
+			undoRedoManager.Redo();
 		}
 	}
 }
